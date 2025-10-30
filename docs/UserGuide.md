@@ -13,15 +13,17 @@ SWEatless is a desktop application for **teaching staff who favour CLI usage** a
 ## Command summary
 
 | Action               | Format, Examples                                                                                                                                    |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Create Student**   | `create_student n/NAME p/PHONE_NUMBER e/EMAIL g/GITHUB_USERNAME​` <br> e.g., `create_student n/James Ho p/22224444 e/jamesho@example.com g/jamesho` |
-| **Delete Student**   | `delete_student INDEX` or `delete_student e/EMAIL`<br> e.g., `delete_student 3` or `delete_student e/johndoe@example.com`                         |
+| **Delete Student**   | `delete_student INDEX` or `delete_student e/EMAIL`<br> e.g., `delete_student 3` or `delete_student e/johndoe@example.com`                           |
 | **Edit Student**     | `edit_student INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [g/GITHUB_USERNAME]​`<br> e.g.,`edit_student 2 n/James Lee e/jameslee@example.com`          |
 | **Create Team**      | `create_team t/TEAM_NAME` <br> e.g., `create_team F12-3`                                                                                            |
 | **Delete Team**      | `delete_team t/TEAM_NAME`<br> e.g., `delete_team F12-3`                                                                                             |
 | **Add To Team**      | `add_to_team INDEX t/TEAM_NAME` <br> e.g., `add_to_team 1 t/F12-3`                                                                                  |
 | **Remove from Team** | `remove_from_team INDEX t/TEAM_NAME`<br> e.g., `remove_from_team 3 t/F12-3`                                                                         |
 | **Find**             | `find n/[MORE_NAMES] t/[MORE_TEAM_NAMES]`<br> e.g., `find n/James Jake t/F12-3`                                                                     |
+| **Import**           | `import f/FILE_NAME`                                                                                                                                |
+| **Export**           | `export [f/FILE_NAME]`                                                                                                                              |
 | **List**             | `list`                                                                                                                                              |
 | **Clear**            | `clear`                                                                                                                                             |
 | **Exit**             | `exit`                                                                                                                                              |
@@ -261,6 +263,39 @@ Examples:
   *Students matching at least one team keyword will be returned (i.e. `OR` search)*
 - `find n/alex david t/F12-3 T11-2` returns all students from team `F12-3` and `T11-2` with names `Alex` or `David`<br>
   *If both `n/` and `/t` tags are used, students with the queried names in the specified teams will be returned (i.e. `AND` search)*
+
+### Importing data from a JSON file: `import`
+
+Imports address book data from an existing JSON file into SWEatless.
+
+Format: `import f/FILE_PATH`
+
+- The specified file must exist and be a valid SWEatless address book JSON file.
+- Relative paths are resolved inside the data/ folder.
+- The imported file replaces the current address book data.
+- If the file cannot be read or is invalid, SWEatless will display an error message.
+
+Examples:
+
+- `import f/my_import.json` Imports address book data from data/my_import.json.
+- `import f/C:\Users\user\Desktop\tp.json` Imports tp.json from desktop (absolute path)
+
+### Exporting data to a JSON file: `export`
+
+Exports the current SWEatless address book data into a JSON file.
+
+Format: `export f/FILE_PATH`
+
+- The exported file will be saved inside the data/ folder by default, unless an absolute path is specified.
+- If the specified file already exists, it will be overwritten.
+- The file must have a .json extension (it will be added automatically if omitted).
+- The command creates the target directory automatically if it does not exist.
+
+Examples:
+
+- `export` Exports the current address book to the user's default download folder
+- `export f/my_export.json` Exports the current address book to data/my_export.json.
+- `export f/C:\Users\user\Desktop\tp.json` Exports to the specified absolute path outside the project folder.
 
 ### Listing all students : `list`
 
